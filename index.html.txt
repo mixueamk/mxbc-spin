@@ -3,208 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>蜜雪冰城 消暑转盘</title>
+    <title>蜜雪冰城 第二杯半价券 | MIXUE 2nd Cup 50% Off</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: linear-gradient(135deg, #ff4d4d 0%, #ff9999 100%);
+            background: linear-gradient(135deg, #ff4d4d 0%, #ff7777 100%);
             font-family: 'Arial', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
             padding: 20px;
         }
-        .logo { font-size: 28px; font-weight: bold; color: white; margin: 10px 0; text-shadow: 2px 2px 0 #c0392b; }
-        .container {
-            background: white; border-radius: 30px; padding: 25px 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3); width: 100%; max-width: 400px;
+        .coupon {
+            background: white;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 380px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
             text-align: center;
         }
-        .wheel-container { position: relative; width: 280px; height: 280px; margin: 0 auto 20px; }
-        canvas { width: 100%; height: 100%; }
-        .pointer {
-            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-            font-size: 36px; color: #ff4d4d; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.3));
-            z-index: 10;
+        /* 顶部红色区域 */
+        .coupon-header {
+            background: linear-gradient(180deg, #e63946 0%, #c0392b 100%);
+            padding: 28px 20px 22px;
+            position: relative;
         }
-        input {
-            width: 100%; padding: 12px; border: 2px solid #ff4d4d; border-radius: 15px;
-            font-size: 16px; margin: 10px 0; text-align: center;
+        .coupon-header .brand {
+            font-size: 26px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 0 #a71d2a;
         }
-        button {
-            background: #ff4d4d; border: none; color: white; font-size: 20px; padding: 14px 30px;
-            border-radius: 50px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 0 #c0392b;
-            transition: 0.1s; width: 80%; margin: 10px auto; display: block;
+        .coupon-header .brand-en {
+            font-size: 12px;
+            color: #ffcccc;
+            display: block;
+            letter-spacing: 2px;
         }
-        button:active { transform: translateY(2px); box-shadow: 0 2px 0 #c0392b; }
-        button:disabled { background: #aaa; box-shadow: 0 4px 0 #777; cursor: not-allowed; }
-        .message { margin-top: 15px; font-size: 18px; font-weight: bold; min-height: 30px; }
-        .note { font-size: 12px; color: #666; margin-top: 10px; }
+        .coupon-header .title {
+            font-size: 36px;
+            font-weight: 900;
+            color: #FFD700;
+            margin: 10px 0 4px;
+            text-shadow: 2px 2px 0 #b8860b;
+        }
+        .coupon-header .title-en {
+            font-size: 14px;
+            color: #ffeeba;
+            display: block;
+        }
+        .coupon-header .discount-badge {
+            display: inline-block;
+            background: #FFD700;
+            color: #c0392b;
+            font-size: 48px;
+            font-weight: 900;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 0 #e6c200;
+        }
+        .discount-badge .off {
+            font-size: 18px;
+            display: block;
+            line-height: 0;
+            margin-top: -20px;
+        }
+        /* 中间主体 */
+        .coupon-body {
+            padding: 20px 25px;
+            border-bottom: 2px dashed #ddd;
+        }
+        .coupon-body .drink-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+        .coupon-body .offer-cn {
+            font-size: 20px;
+            font-weight: bold;
+            color: #c0392b;
+        }
+        .coupon-body .offer-en {
+            font-size: 13px;
+            color: #888;
+            display: block;
+            margin: 4px 0 8px;
+        }
+        .coupon-body .detail {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.7;
+            text-align: left;
+            background: #fff8f8;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 10px 0;
+        }
+        .coupon-body .detail .en {
+            color: #999;
+            font-size: 11px;
+        }
+        /* 底部 */
+        .coupon-footer {
+            padding: 16px 20px;
+            background: #fff5f5;
+        }
+        .coupon-footer .store {
+            font-size: 15px;
+            font-weight: bold;
+            color: #c0392b;
+        }
+        .coupon-footer .store-en {
+            font-size: 11px;
+            color: #999;
+            display: block;
+        }
+        .coupon-footer .validity {
+            display: inline-block;
+            background: #ffe0e0;
+            color: #c0392b;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin: 8px 0;
+        }
+        .coupon-footer .validity-en {
+            font-size: 10px;
+            color: #999;
+            display: block;
+            margin-top: 2px;
+        }
+        .coupon-footer .note {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 6px;
+        }
+        .coupon-footer .code {
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            font-weight: bold;
+            color: #c0392b;
+            letter-spacing: 3px;
+            margin: 8px 0;
+            background: #ffeaea;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 8px;
+        }
+        /* 锯齿边 */
+        .zigzag {
+            position: relative;
+            height: 20px;
+            background: white;
+            border-top: 2px dashed #ddd;
+            overflow: hidden;
+        }
+        .zigzag::before {
+            content: '';
+            position: absolute;
+            top: -11px;
+            left: -10px;
+            width: calc(100% + 20px);
+            height: 20px;
+            background: radial-gradient(circle at 0 0, transparent 10px, white 10px) 0 0,
+                        radial-gradient(circle at 20px 0, transparent 10px, white 10px) 20px 0;
+            background-size: 20px 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="logo">🍦 蜜雪冰城 · 波动巴西店</div>
-    <div class="container">
-        <div class="wheel-container">
-            <div class="pointer">▼</div>
-            <canvas id="wheelCanvas" width="560" height="560"></canvas>
+    <div class="coupon">
+        <!-- 顶部 -->
+        <div class="coupon-header">
+            <span class="brand">🍦 蜜雪冰城</span>
+            <span class="brand-en">MIXUE ICE CREAM & TEA</span>
+            <div class="title">第二杯半价</div>
+            <span class="title-en">2nd Cup 50% Off</span>
+            <div class="discount-badge">
+                <span class="off">50%</span>OFF
+            </div>
         </div>
-        <input type="tel" id="phoneInput" placeholder="请输入新加坡手机号 (9xxxxxxx)" />
-        <button id="spinBtn" onclick="spin()">🎡 开始抽奖</button>
-        <div class="message" id="resultMsg"></div>
-        <div class="note">每天每号限抽1次，奖品到店出示群内中奖消息兑换</div>
+
+        <!-- 中间 -->
+        <div class="coupon-body">
+            <div class="drink-icon">🧊🍋🫧</div>
+            <div class="offer-cn">全场饮品 · 第二杯半价</div>
+            <span class="offer-en">All Drinks · 2nd Cup Half Price</span>
+            <div class="detail">
+                ✅ 同价位或低价位饮品享半价<br>
+                <span class="en">Lower or equal priced drink at 50% off</span><br><br>
+                ✅ 可混搭任意产品<br>
+                <span class="en">Mix & match any drinks</span><br><br>
+                ✅ 不与其它优惠叠加<br>
+                <span class="en">Cannot be combined with other promos</span>
+            </div>
+        </div>
+
+        <!-- 锯齿分隔 -->
+        <div class="zigzag"></div>
+
+        <!-- 底部 -->
+        <div class="coupon-footer">
+            <div class="store">📍 蜜雪冰城 · 波动巴西店</div>
+            <span class="store-en">MIXUE · Potong Pasir</span>
+            <br>
+            <div class="validity">
+                📅 <span id="validDate"></span>
+            </div>
+            <span class="validity-en" id="validDateEN"></span>
+            <br>
+            <div class="code">优惠码：2ND50</div>
+            <div class="note">
+                请截图保存 · 到店出示即享优惠<br>
+                <span style="font-size:10px">Screenshot & show in store to redeem</span>
+            </div>
+        </div>
     </div>
 
     <script>
-        // ========== 配置区 ==========
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzmgWRNxMWb0DNwgkgAkgfuRGWyIy2Io__vXPxzUJeZFemur2lak5slL8D9LQdgduhoPQ/exec';
-        const PRIZES = [
-            { name: '整杯免单', color: '#FFD700', weight: 2 },
-            { name: '免费加三份小料', color: '#00CED1', weight: 8 },
-            { name: '芋圆一份免费', color: '#DA70D6', weight: 10 },
-            { name: '蜜雪钥匙扣', color: '#FF8C00', weight: 15 },
-            { name: '谢谢参与', color: '#B0C4DE', weight: 35 }
-        ];
-        const WEIGHTED_PRIZES = [];
-        PRIZES.forEach(p => {
-            for (let i = 0; i < p.weight; i++) WEIGHTED_PRIZES.push(p.name);
-        });
-        // ===========================
+        // 显示当天日期（有效期当天）
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const weekdaysCN = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+        const weekdaysEN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const wd = now.getDay();
 
-        const canvas = document.getElementById('wheelCanvas');
-        const ctx = canvas.getContext('2d');
-        const spinBtn = document.getElementById('spinBtn');
-        const phoneInput = document.getElementById('phoneInput');
-        const resultMsg = document.getElementById('resultMsg');
-        let spinning = false;
-        let currentPrize = null;
-
-        function drawWheel(rotation = 0) {
-            const center = 280;
-            const radius = 260;
-            const angleStep = (2 * Math.PI) / PRIZES.length;
-            ctx.clearRect(0, 0, 560, 560);
-            for (let i = 0; i < PRIZES.length; i++) {
-                const startAngle = i * angleStep + rotation;
-                const endAngle = startAngle + angleStep;
-                ctx.beginPath();
-                ctx.moveTo(center, center);
-                ctx.arc(center, center, radius, startAngle, endAngle);
-                ctx.closePath();
-                ctx.fillStyle = PRIZES[i].color;
-                ctx.fill();
-                ctx.strokeStyle = 'white';
-                ctx.lineWidth = 3;
-                ctx.stroke();
-                ctx.save();
-                ctx.translate(center, center);
-                ctx.rotate(startAngle + angleStep / 2);
-                ctx.textAlign = "center";
-                ctx.fillStyle = "#333";
-                ctx.font = "bold 18px Arial";
-                ctx.fillText(PRIZES[i].name, radius - 70, 8);
-                ctx.restore();
-            }
-            ctx.beginPath();
-            ctx.arc(center, center, 40, 0, 2*Math.PI);
-            ctx.fillStyle = '#ff4d4d';
-            ctx.fill();
-            ctx.fillStyle = 'white';
-            ctx.font = "bold 20px Arial";
-            ctx.fillText("雪王", center, center+8);
-        }
-
-        function getRandomPrize() {
-            const rand = Math.floor(Math.random() * WEIGHTED_PRIZES.length);
-            return WEIGHTED_PRIZES[rand];
-        }
-
-        function isValidSgPhone(phone) {
-            return /^[89]\d{7}$/.test(phone);
-        }
-
-        function hasSpunToday(phone) {
-            const today = new Date().toDateString();
-            const record = JSON.parse(localStorage.getItem('mxbc_spin')) || {};
-            if (record[phone] && record[phone].date === today) {
-                return true;
-            }
-            return false;
-        }
-
-        function saveSpinRecord(phone, prize) {
-            const today = new Date().toDateString();
-            const record = JSON.parse(localStorage.getItem('mxbc_spin')) || {};
-            record[phone] = { date: today, prize: prize };
-            localStorage.setItem('mxbc_spin', JSON.stringify(record));
-        }
-
-        async function logToSheet(phone, prize) {
-            try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone: phone, prize: prize })
-                });
-            } catch (e) {
-                console.log('记录失败，但可重试', e);
-            }
-        }
-
-        async function spin() {
-            if (spinning) return;
-            const phone = phoneInput.value.trim();
-            if (!isValidSgPhone(phone)) {
-                alert('请输入有效的新加坡手机号（8位，9/8开头）');
-                return;
-            }
-            if (hasSpunToday(phone)) {
-                alert('您今天已经抽过啦，明天再来吧！');
-                return;
-            }
-            spinning = true;
-            spinBtn.disabled = true;
-            resultMsg.textContent = '';
-
-            currentPrize = getRandomPrize();
-            const prizeIndex = PRIZES.findIndex(p => p.name === currentPrize);
-            const anglePerPrize = 360 / PRIZES.length;
-            const targetAngle = (360 - (prizeIndex * anglePerPrize + anglePerPrize / 2) + 90) % 360;
-            const spins = 5 + Math.floor(Math.random() * 5);
-            const finalRotation = 360 * spins + targetAngle;
-
-            let currentRotation = parseFloat(canvas.dataset.rotation) || 0;
-            const startRotation = currentRotation;
-            const duration = 4000;
-            const startTime = Date.now();
-
-            function animate() {
-                const now = Date.now();
-                const elapsed = now - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const ease = 1 - Math.pow(1 - progress, 3);
-                const rotation = startRotation + finalRotation * ease;
-                drawWheel((rotation * Math.PI) / 180);
-                canvas.dataset.rotation = rotation;
-
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    spinning = false;
-                    spinBtn.disabled = false;
-                    resultMsg.textContent = `🎉 恭喜获得：${currentPrize} ！请截图，到店出示兑换。`;
-                    saveSpinRecord(phone, currentPrize);
-                    logToSheet(phone, currentPrize);
-                }
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        drawWheel(0);
-        canvas.dataset.rotation = 0;
+        document.getElementById('validDate').textContent = 
+            `有效期：${year}年${month}月${day}日 ${weekdaysCN[wd]}`;
+        document.getElementById('validDateEN').textContent = 
+            `Valid: ${year}-${month}-${day} ${weekdaysEN[wd]}`;
     </script>
 </body>
 </html>
