@@ -420,7 +420,7 @@
   <div class="page">
     <header class="brand">
       <div class="brand-mark">
-        <img src="assets/mixue-snow-king-logo.png" alt="蜜雪冰城雪王 Logo">
+        <img src="./logo.png" alt="蜜雪冰城雪王 Logo">
       </div>
       <div>
         <div class="brand-name">蜜雪冰城 · 波动巴西</div>
@@ -500,8 +500,9 @@
     const phoneError = document.getElementById("phoneError");
     const resultMsg = document.getElementById("resultMsg");
     const dateDisplay = document.getElementById("dateDisplay");
+    const LOGO_URL = new URL("./logo.png", document.baseURI).href;
     const logoImg = new Image();
-    logoImg.src = "assets/mixue-snow-king-logo.png";
+    logoImg.src = LOGO_URL;
     const testModeEnabled = new URLSearchParams(window.location.search).get("test") === "1";
     let spinning = false;
     let testPrizeIndex = 0;
@@ -769,10 +770,10 @@
         spinBtn.innerHTML = "开始抽奖&nbsp;&nbsp; SPIN NOW&nbsp; ›";
         const wonAt = testMode ? "" : singaporeTimestamp();
         resultMsg.innerHTML = testMode
-          ? `<img class="result-logo" src="assets/mixue-snow-king-logo.png" alt="蜜雪冰城雪王 Logo">
+          ? `<img class="result-logo" src="${LOGO_URL}" alt="蜜雪冰城雪王 Logo">
              测试结果：${prize.cn}
              <span class="en">Test result: ${prize.en}. No record saved.</span>`
-          : `<img class="result-logo" src="assets/mixue-snow-king-logo.png" alt="蜜雪冰城雪王 Logo">
+          : `<img class="result-logo" src="${LOGO_URL}" alt="蜜雪冰城雪王 Logo">
              恭喜获得：${prize.cn}
              <span class="en">You won: ${prize.en}. Screenshot to redeem.</span>
              <span class="receipt">
